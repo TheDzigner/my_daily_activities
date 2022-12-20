@@ -176,5 +176,5 @@ function add_note_fun()
 
 add_note.onclick = add_note_fun
 
-window.onkeypress = add_note_fun
+//window.onkeypress = add_note_fun
 
