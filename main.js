@@ -178,3 +178,13 @@ add_note.onclick = add_note_fun
 
 //window.onkeypress = add_note_fun
 
+window.addEventListener("keydown", function(event) {
+  if (event.key === "Enter" || event.which === 13) {
+    // do something
+    add_note_fun()
+  }
+});
+
+
+
+
