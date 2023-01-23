@@ -82,11 +82,14 @@ try {
       date: `${days[day]}, ${months[month]} ${day_number} -${year} at ${hours}:${minutes} ${isAm ? 'am' : 'pm'}`
     });
     localStorage.setItem('todo', JSON.stringify(Todo_array));
+    AddItemInput.value == '' 
     showTodo()
+    checkTodo()
     feedback_message.innerHTML = 'Task added';
       setTimeout(() => {
         feedbackContainer.classList.remove('active');
       }, 3000);
+      
   } catch (e) {
     if (e instanceof QuotaExceededError) {
       feedbackContainer.classList.add('active');
