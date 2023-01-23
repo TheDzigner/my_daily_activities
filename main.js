@@ -82,7 +82,7 @@ try {
       date: `${days[day]}, ${months[month]} ${day_number} -${year} at ${hours}:${minutes} ${isAm ? 'am' : 'pm'}`
     });
     localStorage.setItem('todo', JSON.stringify(Todo_array));
-    AddItemInput.value == '' 
+    AddItemInput.value = '' 
     showTodo()
     checkTodo()
     feedback_message.innerHTML = 'Task added';
