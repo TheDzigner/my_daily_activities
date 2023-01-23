@@ -59,14 +59,6 @@ function pushTodo()
   }
   
 
-if (localStorage.length === 0) {
-  feedbackContainer.classList.add('active');
-  feedback_message.innerHTML = 'Local storage is disabled. Please enable it to continue.';
-  setTimeout(() => {
-    feedbackContainer.classList.remove('active');
-  }, 3000);
-  return;
-}
 
 var date = new Date();
 var hours = date.getHours() % 12 || 12
