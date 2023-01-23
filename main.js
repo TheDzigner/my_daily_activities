@@ -44,6 +44,9 @@ function checkTodo()
 checkTodo()
 
 
+
+
+
 function pushTodo()
 {
   if (AddItemInput.value == '' || AddItemInput. value == ' ') {
@@ -54,6 +57,17 @@ function pushTodo()
     }, 3000)
     return ;
   }
+  
+
+if (localStorage.length === 0) {
+  feedbackContainer.classList.add('active');
+  feedback_message.innerHTML = 'Local storage is disabled. Please enable it to continue.';
+  setTimeout(() => {
+    feedbackContainer.classList.remove('active');
+  }, 3000);
+  return;
+}
+
 var date = new Date();
 var hours = date.getHours() % 12 || 12
 var isAm = date.getHours() < 12
@@ -69,22 +83,29 @@ var days =
 var months = 
 ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct', 'Nov','Dec']
 
-
+try {
+    // Add the new item to local storage
+    Todo_array.push({
+      todo: AddItemInput.value,
+      date: `${days[day]}, ${months[month]} ${day_number} -${year} at ${hours}:${minutes} ${isAm ? 'am' : 'pm'}`
+    });
+    localStorage.setItem('todo', JSON.stringify(Todo_array));
+    showTodo()
+    feedback_message.innerHTML = 'Task added';
+      setTimeout(() => {
+        feedbackContainer.classList.remove('active');
+      }, 3000);
+  } catch (e) {
+    if (e instanceof QuotaExceededError) {
+      feedbackContainer.classList.add('active');
+      feedback_message.innerHTML = 'Not enough storage space. Please clear some items to continue.';
+      setTimeout(() => {
+        feedbackContainer.classList.remove('active');
+      }, 3000);
+      return;
+    }
+  }
   
-  Todo_array.push({
-    todo:AddItemInput.value,
-    date: `${days[day]}, ${months[month]} ${day_number} -${year} at ${hours}:${minutes} ${isAm ? 'am' : 'pm'}`
-  })
-  localStorage.setItem('todo',JSON.stringify(Todo_array))
-  showTodo()
-  checkTodo()
-  showCompletedTodo()
-  AddItemInput.value = ''
-  feedbackContainer.classList.add('active');
-  feedback_message.innerHTML = 'Task added'
-  setTimeout(()=>{
-  feedbackContainer.classList.remove('active');
-  },3000)
 }
 
 AddItemBtn.onclick = pushTodo
@@ -365,3 +386,5 @@ function showCompletedTodo()
   
 }
 showCompletedTodo()
+
+
