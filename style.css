@@ -1,215 +1,245 @@
 *
-
 {
-
+  margin: 0;
   padding :0;
-
-  margin :0;
-
   box-sizing: border-box;
-
 }
 
-body 
 
+
+
+body {
+    font-size: 15pt;
+    height :100vh;
+    width :min(100%,480px);
+    transition :all  .2s ease-in-out ;
+    font-family: 'Varela Round', sans-serif;
+    background:#3A3E59 ;
+}
+
+header
 {
+  position: fixed ;
+  top: 0;
+  width :min(100%,480px);
+  z-index :10 ;
+  background:#3A3E59 ;
+  display :flex ;
+  justify-content :center ;
+  align-items :flex-start ;
+  flex-direction :column ;
+  padding :20px ;
+  border-bottom :1px solid rgba(188,196,200,.1) ;
+}
 
-  font-size: 15pt;
+header h1 
+{
+  font-size :1em ;
+  color: #BCC4C8;
+  padding :10px ;
+}
 
-  width: min(100%,480px);
-
-  height :100vh;
+.feedback_message
+{
+  width:min(80%,480px);
+  height: 45px ;
+  text-align :center ;
+  position: absolute ;
+  top: -100%;
+  left:10%;
+  display: flex;
+  justify-content :center ;
+  align-items :center ;
+  z-index :20;
+  background :rgba(89,184,157,1);
+  padding :5px ;
+  border-radius :10px ;
+  transition : top  0.5s cubic-bezier(0.19, 1, 0.22, 1);
 
 }
+
+.feedback_message.active 
+{
+  top: 10%;
+  transition : top  0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.feedback_message p 
+{
+  color: #FFFFFF ;
+  font-weight :700 ;
+}
+
+.enter_bar
+{
+  width :100%;
+  text-align :center ;
+  margin :5px auto 0 ;
+  position :relative ;
+}
+.enter_bar input 
+{
+  width: 98%;
+  padding :15px ;
+  border-radius :9999px ;
+  background:#22303C;
+  outline :none ;
+  border :1px solid transparent ;
+  font-family: 'Varela Round', sans-serif;
+  font-size :1em ;
+  color: #FFFFFF ;
+}
+
+.enter_bar button 
+{
+  position: absolute ;
+  right :3%;
+  top: 15%;
+  display :inline-block ;
+  width :40px;
+  height :40px;
+  border-radius :50%;
+  background :#FFFFFF ;
+  border :1px solid #F1F1F1 ;
+  outline :none ;
+}
+
+
 
 .container 
-
 {
-
- width: min(100%,480px);
-
- height:min(88%,88%);
-
- margin:0 auto 0 ;
-
- display:flex;
-
- align-items :center ;
-
- justify-content :flex-start ;
-
- flex-direction :column ;
-
- padding :10px ;
-
- overflow :auto;
-
- position:relative ;
-
- word-wrap: wrap;
-
+ width :min(100%,480px);
+ margin: 40% auto 0 ;
+ text-align :left ;
 }
 
-.container  span 
-
+.container h2 
 {
-
-  position :absolute ;
-
-}
-
-.note__ 
-
-{
-
-  width:min(100%,100%);
-
-  height :auto ;
-
-  text-align: left ;
-
-  background : #FFFFFF;
-
-  margin :10px auto 0 ;
-
-  box-shadow :0 0 7px rgba(3,3,3,.3);
-
-  text-overflow :ellipsis ;
-
-}
-
-.note__.remove 
-
-{
-
-  display :none ;
-
-  transition :height .2s ease-in-out ;
-
-}
-
-.note__  .date__ 
-
-{
-
-  width :100%;
-
-  height:25px;
-
-  background : #C04660;
-
-  border-radius : 0 0 5px 5px;
-
-}
-
-.note__ .date__ h5 
-
-{
-
-  color: #FFFFFF ;
-
-  line-height :2;
-
-  font-weight :300 ;
-
-  font-size :.6em;
-
-  padding-left: 10px;
-
-  font-family: 'Varela Round', sans-serif;
-
-}
-
-.note__   .text__ 
-
-{
-
-  width :100%;
-
-  height :auto;
-
-}
-
-.text__  p 
-
-{
-
-  word-wrap: break-word;
-
+  font-size :.7em ;
   padding :10px ;
-
-  font-family: 'Varela Round', sans-serif;
-
+  color: rgba(188,196,200,.5) ;
 }
 
-.enterNote__ 
-
+.container  .cards_wrapper 
 {
-
-  position :fixed ;
-
-  bottom :0;
-
-  width: min(100%,480px);
-
-  display:flex ;
-
+  width :100%;
+  display: flex;
   justify-content :center ;
-
   align-items :center ;
-
-  padding :15px ;
-
-  background :#FFFFFF ;
-
-  z-index :30 ;
-
-  box-shadow :0 0 10px rgba(3,3,3,.5);
-
+  flex-wrap :wrap ;
+  padding :10px ;
 }
 
-.enterNote__ input 
-
+.cards_wrapper .card 
 {
+  width :100%;
+  height :auto;
+  min-height:95px;
+  background:rgba(220,218, 224,.1);
+  margin :15px auto 0 ;
+  color: #FFFFFF ;
+  display:flex ;
+  justify-content :space-between ;
+  align-items :center ;
+  position :relative ;
+  padding :10px ;
+  border-radius :10px ;
+}
 
-  flex-grow: 2;
+.card.completed 
+{
+  display: none ;
+}
 
+
+
+.card .right_side 
+{
+  position :relative ;
+  width:20%;
+}
+
+.card .right_side button 
+{
   outline: none ;
-
-  padding :10px;
-
-  border :1px solid green ;
-
-  font-size :1em ;
-
-  word-wrap: break-word;
-
-  font-family: 'Varela Round', sans-serif;
-
+  background: transparent ;
+  color :#BCC4C8;
+  border :1px solid transparent ;
 }
-
-.enterNote__  button 
-
+.card .todo 
 {
-
-  flex-grow :1 ;
-
-  padding :15px;
-
-  margin :5px ;
-
-  background : #034D4D;
-
-  color :#FFFFFF ;
-
-  font-weight :700 ;
-  outline :none ;
-
-  border :1px solid #F1F1F1 ;
-
-  border-radius :5px;
-
- font-family: 'Varela Round', sans-serif;
-
+  width :90%;
+  padding :15px ;
+  text-align :left ;
+  text-transform :capitalize ;
 }
 
+.card .todo.editable 
+{
+   outline: 1px groove rgba(188,196,200,.5) ;
+}
+
+.card .left_side 
+{
+  width :8%;
+  
+}
+.card .left_side button 
+{
+  outline: none;
+  background: transparent;
+  color :#BCC4C8;
+  border :1px solid transparent;
+}
+
+
+.card .data_wrapper 
+{
+  position :absolute;
+  bottom: 0;
+  right :0;
+  font-size :.5em;
+  padding :5px ;
+}
+
+
+.Todo_completed_container 
+{
+  margin: 40% auto 0 ;
+  width:min(100%,480px );
+}
+
+
+.Todo_completed_container h3 
+{
+font-size :.7em;
+  padding :10px;
+  color: rgba(188, 196, 200, .5);
+}
+
+.Todo_completed_wrapper
+{
+  width :100%;
+  display: flex;
+  justify-content :center;
+  align-items :center;
+  flex-wrap :wrap;
+  padding :10px;
+}
+
+.Todo_completed_wrapper .card 
+{
+  width :100%;
+  height :auto;
+  min-height:95px;
+  background:rgba(220, 218, 224, .1);
+  margin :15px auto 0;
+  color: #FFFFFF;
+  display:flex;
+  justify-content :space-between;
+  align-items :center;
+  position :relative;
+  padding :10px;
+  border-radius :10px;
+  opacity:.3;
+}

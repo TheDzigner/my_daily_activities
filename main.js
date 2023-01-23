@@ -1,190 +1,367 @@
-const input_note = 
+const feedbackContainer = 
+document.querySelector('.feedback_message')
 
-document.querySelector('#input_note');
+const feedback_message = 
+document.querySelector('.feedback_message p')
 
-let add_note = document.getElementById('add_note')
+const AddItemInput = 
+document.querySelector('#AddItemInput');
 
-const noteWrapper =
+const AddItemBtn = 
+document.querySelector('#AddItemBtn')
 
-document.querySelector('.container')
+const Todo_wrapper = 
+document.querySelector('.cards_wrapper')
 
-let obj = JSON.parse(localStorage.getItem('mynotes') || '[]')
+const count_todo = 
+document.querySelector('.count_todo')
 
-// save all new notes and add the date and time they have been added, and push it to the array 
 
-function SaveNotes(note)
+const count_todo_completed = 
+document.querySelector('.count_todo_completed')
 
+const Todo_completed_wrapper = 
+document.querySelector('.Todo_completed_wrapper')
+
+const Todo_array  = JSON.parse(localStorage.getItem('todo') || '[]')
+
+const Todo_completed = 
+JSON.parse(localStorage.getItem('completedTodo')|| '[]')
+
+
+function checkTodo()
 {
+  if (Todo_array) {
+    count_todo.innerHTML = `To Do - ${Todo_array.length}`
+  }else {
+    count_todo.innerHTML = 'To Do - 0'
+  }
+  
+}
 
- 
 
+
+checkTodo()
+
+
+function pushTodo()
+{
+  if (AddItemInput.value == '' || AddItemInput. value == ' ') {
+    feedbackContainer.classList.add('active');
+    feedback_message.innerHTML = 'Task cannot be empty'
+    setTimeout(() => {
+      feedbackContainer.classList.remove('active');
+    }, 3000)
+    return ;
+  }
 var date = new Date();
-
 var hours = date.getHours() % 12 || 12
-
 var isAm = date.getHours() < 12
-
 var minutes = date.getMinutes()
-
 var seconds = date.getSeconds()
-
 var year = date.getFullYear()
-
 var day = date.getDay();
-
 var day_number = date.getDate()
-
 var month = date.getMonth()
 
 var days = 
-
 ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-
 var months = 
-
 ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct', 'Nov','Dec']
 
- 
-
- obj.push({
-
-    note : `${note}`, 
-
-    date : `Created on - ${days[day]}, ${months[month]},${day_number} -${year} at ${hours}:${minutes} ${isAm ? 'am' : 'pm'}`, 
-
-  })
 
   
-
- localStorage.setItem('mynotes', JSON.stringify(obj))
-
+  Todo_array.push({
+    todo:AddItemInput.value,
+    date: `${days[day]}, ${months[month]} ${day_number} -${year} at ${hours}:${minutes} ${isAm ? 'am' : 'pm'}`
+  })
+  localStorage.setItem('todo',JSON.stringify(Todo_array))
+  showTodo()
+  checkTodo()
+  showCompletedTodo()
+  AddItemInput.value = ''
+  feedbackContainer.classList.add('active');
+  feedback_message.innerHTML = 'Task added'
+  setTimeout(()=>{
+  feedbackContainer.classList.remove('active');
+  },3000)
 }
 
-// display notes from the array stored in the localstorage and loop through it
+AddItemBtn.onclick = pushTodo
 
-function showNote()
 
+function showTodo()
 {
-
-  
-
-  let newNote = ''
-
-  for (var i = 0; i < obj.length; i++) {
-
-    var new__ = `
-
-          <div class="note__">
-
-      <div class="date__">
-
-        <h5>
-
-        ${obj[i].date}
-
-        </h5>
-
-      </div>
-
-      <div class='text__'>
-
-      <p>
-
-      ${obj[i].note}
-
-      </p>
-
-      </div>
-
+  let matchesTodo = 0
+  let html = ''
+  for (var i = 0; i < Todo_array.length; i++) {
+   matchesTodo++
+   let newHtml = `
+    <div class="card">
+    <div class="left_side">
+      <button class="markDone material-symbols-outlined">
+        radio_button_unchecked
+      </button>
     </div>
-
-        `
-
-   newNote += new__
-
-  }
-
-  noteWrapper.innerHTML = newNote
-
-  
-
-  
-
-  
-
-  // selet all notes then add an event on them, and remove from localStorage
-
-  
-
-  
-
-  const all_notes =
-
-  Array.from(document.querySelectorAll('.note__'));
-
-  
-
-  
-
-  all_notes.forEach(DoDeletenote =>{
-
-    DoDeletenote.addEventListener('dblclick',function(){
-
-      if (confirm('Do you want to delete that note ?')) {
-
-        
-
-       obj.splice(all_notes.indexOf(this),1)
-
-        localStorage.setItem('mynotes', JSON.stringify(obj))
-
-       DoDeletenote.classList.add('remove')
-
-      } 
-
-      })
-
+     <div class="todo" data-change="${matchesTodo}">
+       ${Todo_array[i].todo}
+     </div>
+     <div class="right_side">
+     
+   <button data-change="${matchesTodo}" class="saveTodo material-symbols-outlined">
+         check
+     </button>
+     
+     
+      <button data-change="${matchesTodo}" class="editTodo material-symbols-outlined">
+        edit
+      </button> 
       
-
+     <button class="removeTodoBtns material-symbols-outlined">
+        delete
+      </button> 
+      
+      
+     </div>
+     <div class="data_wrapper">
+     ${Todo_array[i].date}
+     </div>
+   </div>
+   `
+   html += newHtml
+  }
+  
+  Todo_wrapper.innerHTML = html
+  
+  let checkMatches = ''
+  
+  const EditTodoBtn = 
+  Array.from(document.querySelectorAll('.editTodo'))
+  
+  const AllTodoTextes = 
+  Array.from(document.querySelectorAll('.todo'))
+  
+  const saveTodo = Array.from(document.querySelectorAll('.saveTodo'))
+  
+  const removeTodoBtns = 
+  Array.from(document.querySelectorAll('.removeTodoBtns'))
+  
+  
+  
+  saveTodo.forEach(btn =>{
+    btn.style.display = 'none'
   })
+   
+  
+  saveTodo.forEach(TodoSave => {
+    TodoSave.addEventListener('click',function(e){
+      e.preventDefault()
+     e.stopPropagation()
+     e.stopImmediatePropagation()
+     
+     checkMatches = this.getAttribute('data-change')
+     
+ for (var i = 0; i < AllTodoTextes.length; i++) {
+      
+     if (checkMatches == AllTodoTextes[i].getAttribute('data-change')) {
+       AllTodoTextes[i].removeAttribute('contenteditable')
+      AllTodoTextes[i].classList.remove('editable')
 
+       Todo_array[saveTodo.indexOf(this)].todo = AllTodoTextes[i].innerHTML.trim()
+         localStorage.setItem('todo',JSON.stringify(Todo_array))
+         
+     EditTodoBtn[i].style.display = 'inline-block'
+         TodoSave.style.display = 'none'
+   feedbackContainer.classList.add('active');
+  feedback_message.innerHTML = 'Task edited'
+  setTimeout(()=>{
+  feedbackContainer.classList.remove('active');
+  },3000)
+     } 
+       
+     }
+     
+    })
+    
+   
+  
+   removeTodoBtns.forEach(remove => {
+   remove.addEventListener('click',function(e){
+     e.preventDefault()
+     e.stopPropagation()
+     e.stopImmediatePropagation()
+     
+     Todo_array.splice(removeTodoBtns.indexOf(this), 1)
+     showTodo()
+     checkTodo()
+     localStorage.setItem('todo', JSON.stringify(Todo_array))
+     
+     feedbackContainer.classList.add('active');
+     feedback_message.innerHTML = 'Task deleted'
+     setTimeout(() => {
+       feedbackContainer.classList.remove('active');
+     }, 3000)
+     })
+   })
+    
+    
+  })
+  
+  
+  
+  
+  
+  EditTodoBtn.forEach(EditBtn => {
+  EditBtn.addEventListener('click',function(e){
+    e.preventDefault()
+     e.stopPropagation()
+     e.stopImmediatePropagation()
+     
+    checkMatches = this.getAttribute('data-change')
+    for (var i = 0; i < AllTodoTextes.length; i++) {
+      if (checkMatches == AllTodoTextes[i].getAttribute('data-change')) {
+        AllTodoTextes[i].setAttribute('contenteditable','true')
+        AllTodoTextes[i].classList.add('editable')
+        AllTodoTextes[i].focus()
+        EditTodoBtn[i].style.display = 'none'
+     saveTodo[i].style.display = 'inline-block'
+      }
+    }
+    
+    
+    })
+  })
+  
+  
+  
+  const markDone = Array.from(document.querySelectorAll('.markDone'))
+  
+  markDone.forEach(radioBtn =>{
+    
+    radioBtn.addEventListener('click',function(e){
+      e.preventDefault()
+     e.stopPropagation()
+     e.stopImmediatePropagation()
+     
+      this.innerHTML = 'radio_button_checked'
+      
+      Todo_completed.push({
+        todo:Todo_array[markDone.indexOf(this)].todo, 
+        date : Todo_array[markDone.indexOf(this)].date
+      })
+      localStorage.setItem('completedTodo',JSON.stringify(Todo_completed))
+      showCompletedTodo()
+      Todo_array.splice(markDone.indexOf(this),1)
+        showTodo()
+        checkTodo()
+      localStorage.setItem('todo',JSON.stringify(Todo_array))
+      feedbackContainer.classList.add('active');
+      feedback_message.innerHTML = 'Task completed'
+      setTimeout(() => {
+        feedbackContainer.classList.remove('active');
+      }, 3000)
+    })
+  })
+  
 }
 
-window.onload = showNote 
+showTodo()
 
-// add note to the SaveNotes parameter.
 
-function add_note_fun()
-
+function showCompletedTodo()
 {
-
-  if (input_note.value.length == 0) {
-
-    return ;
-
-  } else {
-
-    SaveNotes(input_note.value)
-
-    input_note.value = ''
-
-    showNote()
-
+  let html =''
+  for (var i = 0; i < Todo_completed.length; i++) {
+    let newHtml = `
+          <div class="card">
+    <div class="left_side">
+      <button class="checked material-symbols-outlined">
+        radio_button_checked
+      </button>
+    </div>
+     <div class="todo">
+       ${Todo_completed[i].todo}
+     </div>
+     <div class="right_side">
+     
+      <button class="cancel material-symbols-outlined">
+        cancel
+      </button> 
+      
+     <button class="material-symbols-outlined">
+        check
+      </button> 
+      
+     </div>
+     <div class="data_wrapper">
+    Completed -  ${Todo_completed[i].date}
+     </div>
+   </div>
+    `
+   html += newHtml 
+    
   }
+  
+  Todo_completed_wrapper.innerHTML = html
+  
+  const allCancelbtns = 
+  Array.from(document.querySelectorAll('.cancel'))
+  
+  const removeTodoBtns = 
+  Array.from(document.querySelectorAll('.removeTodoBtns'))
+  
+  
+  const checked = Array.from(document.querySelectorAll('.checked'))
+  
+  checked.forEach(checkbtn =>{
+    checkbtn.addEventListener('click',function(e){
+      e.preventDefault()
+     e.stopPropagation()
+     e.stopImmediatePropagation()
+      Todo_array.push({
+        todo:Todo_completed[checked.indexOf(this)].todo,
+        date : Todo_completed[checked.indexOf(this)].date
+      })
+        localStorage.setItem('todo',JSON.stringify(Todo_array))
+        showTodo()
+        checkTodo()
+    Todo_completed.splice(checked.indexOf(this),1)
+      localStorage.setItem('completedTodo',JSON.stringify(Todo_completed))
+         showCompletedTodo()
+       feedbackContainer.classList.add('active');
+       feedback_message.innerHTML = 'Task restored'
+       setTimeout(() => {
+         feedbackContainer.classList.remove('active');
+       }, 3000)
+    })
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  allCancelbtns.forEach(cancel =>{
+   cancel.addEventListener('click',function(e){
+      e.preventDefault()
+     e.stopPropagation()
+     e.stopImmediatePropagation()
 
+      Todo_completed.splice(allCancelbtns.indexOf(this),1)
+      localStorage.setItem('completedTodo',JSON.stringify(Todo_completed))
+       showCompletedTodo()
+      feedbackContainer.classList.add('active');
+      feedback_message.innerHTML = 'Task deleted'
+      setTimeout(() => {
+        feedbackContainer.classList.remove('active');
+      }, 3000)
+    })
+  })
+  
+  
+  
 }
-
-add_note.onclick = add_note_fun
-
-//window.onkeypress = add_note_fun
-
-window.addEventListener("keydown", function(event) {
-  if (event.key === "Enter" || event.which === 13) {
-    // do something
-    add_note_fun()
-  }
-});
-
-
-
-
+showCompletedTodo()

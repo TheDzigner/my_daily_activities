@@ -1,66 +1,74 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>
-
-  Daily Activities
-
-  </title>
-
+  <title>Daily Planner</title>
   
-
   <!-- HTML -->
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
   
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 
   <!-- Custom Styles -->
-
-  
-
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
-
-  
-
-  
-
-  
-
-  
-
-  <script src="main.js" defer >main.js</script>
-
+  <script src="main.js" defer></script>
   <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
+  
+  <header>
+    <div class="feedback_message">
+      <p>
+    Task Completed
+      </p>
+    </div>
+    <h1>
+      Daily Planner
+    </h1>
+    <div class="enter_bar">
+  <input type="text" name="" id="AddItemInput" placeholder="Add Item">
+      <button id="AddItemBtn" class="material-symbols-outlined">
+      add
+    </button>
+    </div>
 
+  </header>
+  
   <div class="container">
+  <h2 class="count_todo">TO DO - 23</h2>  
 
-    
+ <div class="cards_wrapper">
+   
+
+   
+ </div>
+
+  
 
   </div>
+  
+  
+  <div class="Todo_completed_container">
+    
+    <h3 class="count_todo_completed">
+    COMPLETED
+    </h3>
+    
+    <div class="Todo_completed_wrapper">
 
-<div class="enterNote__">
-
-  <input type="text" value="" id="input_note" placeholder="enter activities">
-
-  <button type="button" id="add_note">Add</button>
-
-</div>
-
-  <!-- Project -->
-
+      
+    </div>
+    
+  </div>
+  
+  
+  
+ 
 </body>
-
 </html>
-
