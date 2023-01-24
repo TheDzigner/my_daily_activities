@@ -89,7 +89,7 @@ function pushTodo()
 
 {
 
-  if (AddItemInput.value == '' || AddItemInput. value == ' ') {
+  if (AddItemInput.value.trim() == '') {
 
     feedbackContainer.classList.add('active');
 
@@ -105,6 +105,7 @@ function pushTodo()
 
   }
 
+  
   
 
 try {
